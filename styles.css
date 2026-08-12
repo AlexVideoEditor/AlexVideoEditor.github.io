@@ -193,19 +193,16 @@ body.modal-open {
    caused by transforms inside the multi-column portfolio layout. */
 #work article,
 #work article:hover {
-  isolation: isolate;
   transform: none !important;
   transition: box-shadow .2s ease, border-color .2s ease !important;
 }
 
 #work article > button {
   position: relative;
-  z-index: 1;
 }
 
 #work article > div {
   position: relative;
-  z-index: 2;
   background: var(--card);
   opacity: 1 !important;
   visibility: visible !important;
@@ -236,6 +233,43 @@ body.modal-open {
 
 #work article > button:hover > span:last-child > span {
   background: color-mix(in oklab, var(--accent) 88%, white);
+}
+
+/* A real grid is more stable than CSS multi-columns when cards contain
+   overlays and lazy-loaded media. It also preserves a predictable reading
+   order on desktop and tablet. */
+@media (min-width: 768px) {
+  #work ul {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    columns: auto !important;
+  }
+
+  #work ul > li {
+    margin: 0 !important;
+    break-inside: auto;
+  }
+
+  #work article {
+    height: 100%;
+  }
+
+  #work article img {
+    aspect-ratio: 4 / 5 !important;
+    object-fit: cover;
+  }
+
+  #work article img.aspect-video {
+    object-fit: contain;
+    background: #070a12;
+  }
+}
+
+@media (min-width: 1024px) {
+  #work ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 767px) {
