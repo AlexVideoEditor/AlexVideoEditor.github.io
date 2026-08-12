@@ -26,7 +26,7 @@ function prepareSalesContent() {
     brandMark.className = "brand-avatar";
     brandMark.textContent = "";
     const avatar = document.createElement("img");
-    avatar.src = "assets/Alex_Avatar.jpg";
+    avatar.src = "Alex_Avatar.jpg";
     avatar.alt = "";
     avatar.setAttribute("aria-hidden", "true");
     avatar.width = 256;
