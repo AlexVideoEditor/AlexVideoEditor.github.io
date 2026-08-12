@@ -195,6 +195,7 @@ body.modal-open {
 #work article:hover {
   isolation: isolate;
   transform: none !important;
+  transition: box-shadow .2s ease, border-color .2s ease !important;
 }
 
 #work article > button {
@@ -213,6 +214,28 @@ body.modal-open {
 
 #work article:hover img {
   transform: none !important;
+}
+
+#work article img {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* The whole image remains clickable, so keep the play affordance visible.
+   Avoiding an opacity animation prevents Safari from repainting neighboring
+   masonry columns and making card copy flicker or jump. */
+#work article > button > span:last-child {
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+#work article > button > span:last-child > span {
+  transform: none !important;
+  transition: background-color .2s ease !important;
+}
+
+#work article > button:hover > span:last-child > span {
+  background: color-mix(in oklab, var(--accent) 88%, white);
 }
 
 @media (max-width: 767px) {
