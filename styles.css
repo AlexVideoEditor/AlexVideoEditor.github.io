@@ -218,12 +218,11 @@ body.modal-open {
   transition: none !important;
 }
 
-/* The whole image remains clickable, so keep the play affordance visible.
-   Avoiding an opacity animation prevents Safari from repainting neighboring
-   masonry columns and making card copy flicker or jump. */
+/* Keep the play affordance visible by default for touch devices. Desktop
+   switches it to a hover/focus interaction below. */
 #work article > button > span:last-child {
   opacity: 1 !important;
-  transition: none !important;
+  transition: opacity .2s ease !important;
 }
 
 #work article > button > span:last-child > span {
@@ -242,7 +241,7 @@ body.modal-open {
   #work ul {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
+    align-items: end;
     gap: 1.5rem;
     columns: auto !important;
   }
@@ -261,6 +260,15 @@ body.modal-open {
     aspect-ratio: 16 / 9 !important;
     object-fit: cover;
     background: transparent;
+  }
+
+  #work article > button > span:last-child {
+    opacity: 0 !important;
+  }
+
+  #work article > button:hover > span:last-child,
+  #work article > button:focus-visible > span:last-child {
+    opacity: 1 !important;
   }
 }
 
