@@ -126,3 +126,111 @@ header.is-scrolled > div {
 body.modal-open {
   overflow: hidden;
 }
+
+/* Sales proof placed directly below the hero. */
+.trust-strip {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(1120px, calc(100% - 2.5rem));
+  margin: -1rem auto 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+.trust-strip > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .2rem;
+  padding: 1.25rem 1.4rem;
+  text-align: center;
+}
+
+.trust-strip > div + div {
+  border-left: 1px solid var(--border);
+}
+
+.trust-strip strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+.trust-strip span {
+  color: var(--muted-foreground);
+  font-size: .78rem;
+}
+
+.work-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 12rem;
+  margin: 1rem auto 0;
+  padding: .8rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--foreground);
+  font-size: .875rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.work-toggle:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .trust-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: calc(100% - 2.5rem);
+    margin-top: -1.25rem;
+  }
+
+  .trust-strip > div {
+    padding: 1rem .7rem;
+  }
+
+  .trust-strip > div:nth-child(3) {
+    border-left: 0;
+  }
+
+  .trust-strip > div:nth-child(n + 3) {
+    border-top: 1px solid var(--border);
+  }
+
+  .trust-strip strong {
+    font-size: .95rem;
+  }
+
+  .trust-strip span {
+    font-size: .7rem;
+  }
+
+  #work {
+    padding-top: 4.5rem;
+  }
+
+  #work article img {
+    aspect-ratio: 16 / 10 !important;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  #work article > div {
+    padding: 1.1rem 1.25rem 1.25rem;
+  }
+
+  #work ul > li {
+    margin-bottom: 1rem;
+  }
+}

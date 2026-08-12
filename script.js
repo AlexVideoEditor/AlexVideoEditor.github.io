@@ -20,6 +20,140 @@ function youtubeEmbedUrl(url) {
   return match ? `https://www.youtube-nocookie.com/embed/${match[1]}?autoplay=1` : url;
 }
 
+function prepareSalesContent() {
+  const hero = document.querySelector("#top");
+  if (hero && !document.querySelector(".trust-strip")) {
+    const proof = document.createElement("div");
+    proof.className = "trust-strip";
+    proof.setAttribute("aria-label", "Experience and collaboration details");
+    proof.innerHTML = `
+      <div><strong>3+ years</strong><span>Professional experience</span></div>
+      <div><strong>1,000+</strong><span>Completed videos</span></div>
+      <div><strong>Paid test</strong><span>Before a retainer</span></div>
+      <div><strong>100% async</strong><span>No call required</span></div>`;
+    hero.insertAdjacentElement("afterend", proof);
+  }
+
+  const cards = [...document.querySelectorAll("#work ul > li")];
+  const cardByTitle = (title) => cards.find((card) => card.querySelector("h3")?.textContent.trim() === title);
+  const updateCard = (currentTitle, { title, description, url, image, alt, width, height }) => {
+    const card = cardByTitle(currentTitle);
+    if (!card) return;
+    const heading = card.querySelector("h3");
+    const paragraph = card.querySelector("h3 + p");
+    const link = card.querySelector('a[target="_blank"]');
+    const button = card.querySelector('button[aria-label^="Play "]');
+    const img = card.querySelector("img");
+    if (heading && title) heading.textContent = title;
+    if (paragraph && description) paragraph.textContent = description;
+    if (link && url) link.href = url;
+    if (button && title) button.setAttribute("aria-label", `Play ${title}`);
+    if (img && image) img.src = image;
+    if (img && alt) img.alt = alt;
+    if (img && width) img.width = width;
+    if (img && height) img.height = height;
+  };
+
+  updateCard("Meta Ad", {
+    title: "High-Ticket Meta Ad",
+    description: "Campaign edit that helped generate 10+ qualified leads.",
+  });
+  updateCard("Dietitian Reel Series", {
+    title: "Dietitian Reel Series",
+    description: "Recurring educational reels for a nutrition expert.",
+  });
+  updateCard("Legal Content Reel", {
+    title: "Expert Content Reel",
+    description: "Clean, branded short-form for an expert-led account.",
+  });
+  updateCard("Local Business Reel", {
+    title: "Local Business Reel",
+    description: "Short-form promotional edit for a local service business.",
+  });
+  updateCard("Finance YouTube Video", {
+    title: "Finance YouTube Video",
+    description: "Talking-head editing for a finance YouTube channel.",
+  });
+  updateCard("Animated Documentary", {
+    title: "Animated Documentary",
+    description: "Long-form documentary with custom motion graphics.",
+  });
+  updateCard("Beauty Brand Collaboration", {
+    title: "Beauty Brand Collaboration",
+    description: "Sponsored short-form content for a beauty brand.",
+  });
+
+  const workList = document.querySelector("#work ul");
+  if (workList && !cardByTitle("Glovo Branded Series")) {
+    const localBusinessCard = cardByTitle("Local Business Reel");
+    const glovoCard = localBusinessCard?.cloneNode(true);
+    if (glovoCard) {
+      glovoCard.querySelector("h3").textContent = "Glovo Branded Series";
+      glovoCard.querySelector("h3 + p").textContent =
+        "Recurring branded content delivered for an agency and Glovo.";
+      glovoCard.querySelector('a[target="_blank"]').href = "https://www.youtube.com/shorts/re1KmohkZFw";
+      glovoCard.querySelector('button[aria-label^="Play "]').setAttribute("aria-label", "Play Glovo Branded Series");
+      const glovoImage = glovoCard.querySelector("img");
+      glovoImage.src = "assets/Glovo_Branded_Series.jpg";
+      glovoImage.alt = "Glovo Branded Series — Agency edit still frame";
+      glovoImage.width = 351;
+      glovoImage.height = 624;
+      glovoCard.querySelector("article button span").textContent = "Agency";
+      workList.append(glovoCard);
+    }
+  }
+
+  const filterRow = document.querySelector('#work [role="tablist"]');
+  if (filterRow && ![...filterRow.querySelectorAll('[role="tab"]')].some((tab) => tab.textContent.trim() === "Agency")) {
+    const templateTab = filterRow.querySelector('[role="tab"]:last-child');
+    const agencyTab = templateTab?.cloneNode(true);
+    if (agencyTab) {
+      agencyTab.textContent = "Agency";
+      agencyTab.setAttribute("aria-selected", "false");
+      filterRow.append(agencyTab);
+    }
+  }
+
+  const preferredOrder = [
+    "High-Ticket Meta Ad",
+    "Dietitian Reel Series",
+    "Finance YouTube Video",
+    "Glovo Branded Series",
+    "Expert Content Reel",
+    "Local Business Reel",
+    "Animated Documentary",
+    "Beauty Brand Collaboration",
+  ];
+  if (workList) {
+    preferredOrder.forEach((title) => {
+      const card = [...workList.children].find((item) => item.querySelector("h3")?.textContent.trim() === title);
+      if (card) workList.append(card);
+    });
+  }
+
+  const contact = document.querySelector("#contact");
+  const contactHeading = contact?.querySelector("h2");
+  const contactCopy = contactHeading?.nextElementSibling;
+  const contactCards = contact?.querySelectorAll("a");
+  if (contactHeading) contactHeading.textContent = "Ready to hand off the editing?";
+  if (contactCopy) {
+    contactCopy.textContent =
+      "Send me what you create, how many videos you publish each month and one style reference. I’ll suggest the right paid test — no call required.";
+  }
+  if (contactCards?.[0]) {
+    contactCards[0].href =
+      "mailto:kontakt@olekzmontuje.pl?subject=Paid%20test%20edit&body=Hi%20Alex%2C%0A%0AI%20create%3A%20%0AVideos%20per%20month%3A%20%0AStyle%20reference%3A%20%0AAnything%20else%3A%20";
+    const labels = contactCards[0].querySelectorAll("span span");
+    if (labels[0]) labels[0].textContent = "Email project details";
+    if (labels[1]) labels[1].textContent = "Best for scope and references";
+  }
+  if (contactCards?.[1]) {
+    const labels = contactCards[1].querySelectorAll("span span");
+    if (labels[0]) labels[0].textContent = "Send an Instagram DM";
+    if (labels[1]) labels[1].textContent = "Best for a quick first message";
+  }
+}
+
 function setupRevealAnimations() {
   const elements = document.querySelectorAll(".reveal");
   if (!("IntersectionObserver" in window)) {
@@ -76,6 +210,38 @@ function setupWorkFilters() {
   const cards = [...document.querySelectorAll("#work ul > li")];
   if (!tabs.length || !cards.length) return;
 
+  const featuredTitles = new Set([
+    "High-Ticket Meta Ad",
+    "Dietitian Reel Series",
+    "Finance YouTube Video",
+    "Glovo Branded Series",
+  ]);
+  let expanded = false;
+
+  const toggle = document.createElement("button");
+  toggle.type = "button";
+  toggle.className = "work-toggle";
+  toggle.textContent = "View all 8 projects";
+  document.querySelector("#work ul")?.insertAdjacentElement("afterend", toggle);
+
+  const render = (selected) => {
+    cards.forEach((card) => {
+      const category = card.querySelector("article button span")?.textContent.trim();
+      const title = card.querySelector("h3")?.textContent.trim();
+      const matchesCategory = selected === "All" || category === selected;
+      const passesLimit = selected !== "All" || expanded || featuredTitles.has(title);
+      card.hidden = !matchesCategory || !passesLimit;
+    });
+    toggle.hidden = selected !== "All";
+    toggle.textContent = expanded ? "Show featured work" : "View all 8 projects";
+  };
+
+  toggle.addEventListener("click", () => {
+    expanded = !expanded;
+    render("All");
+    if (!expanded) document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" });
+  });
+
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       const selected = tab.textContent.trim();
@@ -86,13 +252,11 @@ function setupWorkFilters() {
         item.classList.toggle("active-filter", active);
       });
 
-      cards.forEach((card) => {
-        const category = card.querySelector("article button span")?.textContent.trim();
-        const visible = selected === "All" || category === selected;
-        card.hidden = !visible;
-      });
+      render(selected);
     });
   });
+
+  render("All");
 }
 
 function setupVideoModal() {
@@ -165,9 +329,9 @@ function setupFaq() {
   });
 }
 
+prepareSalesContent();
 setupRevealAnimations();
 setupHeader();
 setupWorkFilters();
 setupVideoModal();
 setupFaq();
-
