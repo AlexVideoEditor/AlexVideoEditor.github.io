@@ -12,6 +12,24 @@ header.is-scrolled > div {
   padding-bottom: .55rem;
 }
 
+.brand-avatar {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+.brand-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .mobile-nav {
   display: none;
   position: fixed;
@@ -241,7 +259,7 @@ body.modal-open {
   #work ul {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: end;
+    align-items: start;
     gap: 1.5rem;
     columns: auto !important;
   }
@@ -249,6 +267,16 @@ body.modal-open {
   #work ul > li {
     margin: 0 !important;
     break-inside: auto;
+  }
+
+  /* Landscape cards face the centre of the portfolio: the upper one is
+     bottom-aligned, while the lower one starts at the top of its row. */
+  #work ul > li:nth-child(3) {
+    align-self: end;
+  }
+
+  #work ul > li:nth-child(7) {
+    align-self: start;
   }
 
   #work article img {

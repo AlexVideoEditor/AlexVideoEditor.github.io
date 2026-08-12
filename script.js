@@ -21,6 +21,19 @@ function youtubeEmbedUrl(url) {
 }
 
 function prepareSalesContent() {
+  const brandMark = document.querySelector('header a[href="#top"] > span:first-child');
+  if (brandMark) {
+    brandMark.className = "brand-avatar";
+    brandMark.textContent = "";
+    const avatar = document.createElement("img");
+    avatar.src = "assets/Alex_Avatar.jpg";
+    avatar.alt = "";
+    avatar.setAttribute("aria-hidden", "true");
+    avatar.width = 256;
+    avatar.height = 256;
+    brandMark.append(avatar);
+  }
+
   const hero = document.querySelector("#top");
   if (hero && !document.querySelector(".trust-strip")) {
     const proof = document.createElement("div");
