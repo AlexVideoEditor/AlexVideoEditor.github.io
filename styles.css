@@ -166,7 +166,7 @@ body.modal-open {
 }
 
 .work-toggle {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   min-width: 12rem;
@@ -189,7 +189,37 @@ body.modal-open {
   color: var(--accent);
 }
 
+/* Keep card copy on a stable layer. This avoids Chromium repaint glitches
+   caused by transforms inside the multi-column portfolio layout. */
+#work article,
+#work article:hover {
+  isolation: isolate;
+  transform: none !important;
+}
+
+#work article > button {
+  position: relative;
+  z-index: 1;
+}
+
+#work article > div {
+  position: relative;
+  z-index: 2;
+  background: var(--card);
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+#work article:hover img {
+  transform: none !important;
+}
+
 @media (max-width: 767px) {
+  .work-toggle:not([hidden]) {
+    display: flex;
+  }
+
   .trust-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     width: calc(100% - 2.5rem);

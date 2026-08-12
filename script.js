@@ -57,6 +57,10 @@ function prepareSalesContent() {
   updateCard("Meta Ad", {
     title: "High-Ticket Meta Ad",
     description: "Campaign edit that helped generate 10+ qualified leads.",
+    image: "assets/High_Ticket_Meta_Ad.jpg",
+    alt: "High-Ticket Meta Ad — Short-form edit still frame",
+    width: 717,
+    height: 1200,
   });
   updateCard("Dietitian Reel Series", {
     title: "Dietitian Reel Series",
@@ -69,6 +73,10 @@ function prepareSalesContent() {
   updateCard("Local Business Reel", {
     title: "Local Business Reel",
     description: "Short-form promotional edit for a local service business.",
+    image: "assets/Local_Business_Reel.jpg",
+    alt: "Local Business Reel — Short-form edit still frame",
+    width: 705,
+    height: 1200,
   });
   updateCard("Finance YouTube Video", {
     title: "Finance YouTube Video",
@@ -77,6 +85,10 @@ function prepareSalesContent() {
   updateCard("Animated Documentary", {
     title: "Animated Documentary",
     description: "Long-form documentary with custom motion graphics.",
+    image: "assets/Animated_Documentary.jpg",
+    alt: "Animated Documentary — YouTube edit still frame",
+    width: 1600,
+    height: 893,
   });
   updateCard("Beauty Brand Collaboration", {
     title: "Beauty Brand Collaboration",
@@ -96,8 +108,8 @@ function prepareSalesContent() {
       const glovoImage = glovoCard.querySelector("img");
       glovoImage.src = "assets/Glovo_Branded_Series.jpg";
       glovoImage.alt = "Glovo Branded Series — Agency edit still frame";
-      glovoImage.width = 351;
-      glovoImage.height = 624;
+      glovoImage.width = 719;
+      glovoImage.height = 1200;
       glovoCard.querySelector("article button span").textContent = "Agency";
       workList.append(glovoCard);
     }
@@ -217,6 +229,7 @@ function setupWorkFilters() {
     "Glovo Branded Series",
   ]);
   let expanded = false;
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
 
   const toggle = document.createElement("button");
   toggle.type = "button";
@@ -224,15 +237,17 @@ function setupWorkFilters() {
   toggle.textContent = "View all 8 projects";
   document.querySelector("#work ul")?.insertAdjacentElement("afterend", toggle);
 
+  let currentFilter = "All";
   const render = (selected) => {
+    currentFilter = selected;
     cards.forEach((card) => {
       const category = card.querySelector("article button span")?.textContent.trim();
       const title = card.querySelector("h3")?.textContent.trim();
       const matchesCategory = selected === "All" || category === selected;
-      const passesLimit = selected !== "All" || expanded || featuredTitles.has(title);
+      const passesLimit = selected !== "All" || !mobileQuery.matches || expanded || featuredTitles.has(title);
       card.hidden = !matchesCategory || !passesLimit;
     });
-    toggle.hidden = selected !== "All";
+    toggle.hidden = selected !== "All" || !mobileQuery.matches;
     toggle.textContent = expanded ? "Show featured work" : "View all 8 projects";
   };
 
@@ -255,6 +270,8 @@ function setupWorkFilters() {
       render(selected);
     });
   });
+
+  mobileQuery.addEventListener("change", () => render(currentFilter));
 
   render("All");
 }
