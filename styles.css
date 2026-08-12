@@ -242,6 +242,7 @@ body.modal-open {
   #work ul {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
     gap: 1.5rem;
     columns: auto !important;
   }
@@ -251,18 +252,15 @@ body.modal-open {
     break-inside: auto;
   }
 
-  #work article {
-    height: 100%;
-  }
-
   #work article img {
     aspect-ratio: 4 / 5 !important;
     object-fit: cover;
   }
 
   #work article img.aspect-video {
-    object-fit: contain;
-    background: #070a12;
+    aspect-ratio: 16 / 9 !important;
+    object-fit: cover;
+    background: transparent;
   }
 }
 
