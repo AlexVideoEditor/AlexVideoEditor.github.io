@@ -179,6 +179,54 @@ function prepareSalesContent() {
   }
 }
 
+function setupVslSection() {
+  const workSection = document.querySelector("#work");
+  if (!workSection || document.querySelector("#intro-video")) return;
+
+  const section = document.createElement("section");
+  section.id = "intro-video";
+  section.className = "vsl-section";
+  section.setAttribute("aria-labelledby", "intro-video-title");
+  section.innerHTML = `
+    <div class="vsl-section__inner">
+      <div class="vsl-section__heading reveal" data-visible="false">
+        <span class="section-label">Start here</span>
+        <h2 id="intro-video-title">Looking for the right video editor?</h2>
+        <p>Watch this short introduction to my editing style, experience and the way I work with clients.</p>
+      </div>
+      <div class="vsl-player reveal" data-visible="false" style="transition-delay:80ms">
+        <button class="vsl-player__facade" type="button" aria-label="Play introduction video">
+          <img
+            src="https://i.ytimg.com/vi/y8yAQte7oi0/maxresdefault.jpg"
+            alt="Introduction to Alex's video editing services"
+            width="1280"
+            height="720"
+            loading="lazy"
+          >
+          <span class="vsl-player__shade" aria-hidden="true"></span>
+          <span class="vsl-player__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>`;
+
+  workSection.insertAdjacentElement("beforebegin", section);
+
+  section.querySelector(".vsl-player__facade")?.addEventListener("click", (event) => {
+    const facade = event.currentTarget;
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube-nocookie.com/embed/y8yAQte7oi0?autoplay=1&rel=0";
+    iframe.title = "Meet Alex — professional video editor";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.allowFullscreen = true;
+    facade.replaceWith(iframe);
+  });
+}
+
 function setupRevealAnimations() {
   const elements = document.querySelectorAll(".reveal");
   if (!("IntersectionObserver" in window)) {
@@ -360,6 +408,7 @@ function setupFaq() {
 }
 
 prepareSalesContent();
+setupVslSection();
 setupRevealAnimations();
 setupHeader();
 setupWorkFilters();

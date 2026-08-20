@@ -207,6 +207,116 @@ body.modal-open {
   color: var(--accent);
 }
 
+/* Sales video placed before the portfolio. The YouTube player is loaded only
+   after a visitor chooses to play it. */
+.vsl-section {
+  padding: 6rem 0 2rem;
+}
+
+.vsl-section__inner {
+  width: min(960px, calc(100% - 2.5rem));
+  margin: 0 auto;
+}
+
+.vsl-section__heading {
+  max-width: 46rem;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.vsl-section__heading h2 {
+  margin-top: 1rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.02;
+}
+
+.vsl-section__heading p {
+  max-width: 39rem;
+  margin: 1.25rem auto 0;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.vsl-player {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1.75rem;
+  background: #090b12;
+  box-shadow: var(--shadow-lift);
+}
+
+.vsl-player iframe,
+.vsl-player__facade {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.vsl-player__facade {
+  position: relative;
+  overflow: hidden;
+  background: #090b12;
+  cursor: pointer;
+}
+
+.vsl-player__facade img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .45s ease;
+}
+
+.vsl-player__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(9 11 18 / 2%), rgb(9 11 18 / 22%));
+  transition: background .25s ease;
+}
+
+.vsl-player__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 5rem;
+  height: 5rem;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  box-shadow: 0 20px 50px rgb(0 0 0 / 32%);
+  transform: translate(-50%, -50%);
+  transition: transform .25s ease, background-color .25s ease;
+}
+
+.vsl-player__play svg {
+  width: 1.65rem;
+  height: 1.65rem;
+}
+
+.vsl-player__facade:hover img {
+  transform: scale(1.025);
+}
+
+.vsl-player__facade:hover .vsl-player__shade {
+  background: rgb(9 11 18 / 14%);
+}
+
+.vsl-player__facade:hover .vsl-player__play,
+.vsl-player__facade:focus-visible .vsl-player__play {
+  background: color-mix(in oklab, var(--accent) 88%, white);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.vsl-player__facade:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: -3px;
+}
+
 /* Keep card copy on a stable layer. This avoids Chromium repaint glitches
    caused by transforms inside the multi-column portfolio layout. */
 #work article,
@@ -307,6 +417,27 @@ body.modal-open {
 }
 
 @media (max-width: 767px) {
+  .vsl-section {
+    padding: 4.5rem 0 0;
+  }
+
+  .vsl-section__heading {
+    margin-bottom: 1.5rem;
+  }
+
+  .vsl-section__heading p {
+    font-size: .95rem;
+  }
+
+  .vsl-player {
+    border-radius: 1.25rem;
+  }
+
+  .vsl-player__play {
+    width: 4rem;
+    height: 4rem;
+  }
+
   .work-toggle:not([hidden]) {
     display: flex;
   }
