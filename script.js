@@ -192,7 +192,6 @@ function setupVslSection() {
       <div class="vsl-section__heading reveal" data-visible="false">
         <span class="section-label">Start here</span>
         <h2 id="intro-video-title">Looking for the right video editor?</h2>
-        <p>Watch this short introduction to my editing style, experience and the way I work with clients.</p>
       </div>
       <div class="vsl-player reveal" data-visible="false" style="transition-delay:80ms">
         <button class="vsl-player__facade" type="button" aria-label="Play introduction video">
